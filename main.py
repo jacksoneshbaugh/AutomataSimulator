@@ -1,5 +1,6 @@
 import json
 from automata import DFATransition, DFAState, DeterministicFiniteAutomaton
+from nfa import load_nfa_from_json, simulate_nfa
 
 
 def parse_dfa_from_json(file_name: str) -> DeterministicFiniteAutomaton:
@@ -43,13 +44,27 @@ def parse_dfa_from_json(file_name: str) -> DeterministicFiniteAutomaton:
 
 if __name__ == "__main__":
     input_file = input("Please enter the path to the JSON file: ")
-    dfa = parse_dfa_from_json(input_file)
-    while True:
-        test_string = input("Please enter the test string: ")
-        if dfa.run(test_string):
-            print('String accepted.')
-        else:
-            print('String rejected.')
-        if input("Do you want to continue? (y/n): ").lower() != 'y':
-            break
+    with open(input_file, 'r') as json_file:
+        data = json.load(json_file)
+        if data['type'] == 'deterministic_finite_automaton':
+            dfa = parse_dfa_from_json(input_file)
+            while True:
+                test_string = input("Please enter the test string: ")
+                if dfa.run(test_string):
+                    print('String accepted.')
+                else:
+                    print('String rejected.')
+                if input("Do you want to continue? (y/n): ").lower() != 'y':
+                    break
+        elif data['type'] == 'nondeterministic_finite_automaton':
+            initial_state, final_states = load_nfa_from_json(input_file)
+
+            while True:
+                test_string = input("Please enter the test string: ")
+                if simulate_nfa(initial_state, final_states, test_string):
+                    print('String accepted.')
+                else:
+                    print('String rejected.')
+                if input("Do you want to continue? (y/n): ").lower() != 'y':
+                    break
     print('Goodbye!')

@@ -76,5 +76,8 @@ We define these same properties in `json`.
 
 Once you have the `json` file, simply run the program and follow the prompts.
 
+### 2.2: Nondeterministic Finite Automata
+To run NFAs, just change the `type` to ```json "type": "nondeterministic_finite_automaton"```. Also, as a note: $\epsilon$ is denoted as "" here.
+
 ## 3. About Me
 My name is Jackson Eshbaugh, and I'm a computer science/French student at Lafayette College interested in the overlaps that computer science makes with other fields of study. I'm excited about fields like bioinformatics (computational biology) and computational linguistics. Please check out my [website at https://jacksoneshbaugh.github.io](https://jacksoneshbaugh.github.io)!
